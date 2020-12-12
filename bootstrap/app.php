@@ -61,7 +61,8 @@ $app->singleton(
 */
 
 $app->configure('app');
-
+// CORS Configuration
+$app->configure('cors');
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -73,9 +74,9 @@ $app->configure('app');
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+    Fruitcake\Cors\HandleCors::class //enabling CORS middleware
+]);
 
 // $app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
@@ -94,6 +95,10 @@ $app->configure('app');
 
 // Adding flipbox/lumen-generator
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+
+
+// Adding CORS support
+$app->register(Fruitcake\Cors\CorsServiceProvider::class);
 
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
