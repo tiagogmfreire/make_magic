@@ -79,7 +79,7 @@ class CharacterService
         }
 
         // dealing with invalid character ids (not found and zero)
-        if(!empty($id) && empty($characterModel) || $id == 0) {
+        if(!empty($id) && empty($characterModel) || $id === 0) {
             throw new \Exception("Invalid character ID");
         }
         
