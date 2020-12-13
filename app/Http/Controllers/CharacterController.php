@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Character;
 use App\Services\CharacterService;
 use Illuminate\Http\Request;
 
@@ -52,5 +53,46 @@ class CharacterController extends Controller
         } catch (\Exception $e) {
             throw $e;
         }
+    }
+
+    /**
+     * Method to create new characteres
+     *
+     * @param Request $request
+     * @param CharacterService $characterService
+     * 
+     * @return response Json response
+     */
+    public function store(Request $request, CharacterService $characterService)
+    {
+        try {
+
+            $name = $request->input("name");
+            $school = $request->input("school");
+            $patronus = $request->input("patronus");
+
+            $char = [
+                "name" => $name,
+                "school" => $school,
+                "patronus" => $patronus
+            ];
+
+            $character = $characterService->create($char);
+
+            return response()->json($character->id);
+                
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function update($id, Request $request, CharacterService $characterService)
+    {
+
+    }
+
+    public function destroy($id, Request $request, CharacterService $characterService)
+    {
+
     }
 }
