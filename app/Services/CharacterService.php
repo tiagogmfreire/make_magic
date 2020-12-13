@@ -25,9 +25,18 @@ class CharacterService
      *
      * @return array Returns an array with all characters
      */
-    public function list()
+    public function list(?string $house = null)
     {
-        $chars = Character::all();
+        if (!empty($house)) {
+
+            $houseModel = $this->houseService->search($house);
+
+            $chars = Character::where('house_id', $houseModel->id)->get();
+
+        } else {
+
+            $chars = Character::all();
+        }
 
         return $chars;
     }

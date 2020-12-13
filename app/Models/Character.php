@@ -13,4 +13,14 @@ class Character extends Model
     protected $fillable = array('*');
     protected $guarded = ['id'];
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+
+    /**
+     * Mapping relationship with the 'houses' table
+     *
+     * @return House
+     */
+    public function house()
+    {
+        return $this->belongsTo(House::class);
+    }
 }

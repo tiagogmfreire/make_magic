@@ -24,7 +24,9 @@ class CharacterController extends Controller
     {
         try {
 
-            $chars = $characterService->list();
+            $house = $request->input('house');
+
+            $chars = $characterService->list($house);
 
             return response()->json($chars);
 
