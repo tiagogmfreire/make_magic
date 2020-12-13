@@ -47,12 +47,12 @@ class HouseService
             }
 
             $houseModel->api_id= $house['id'];
-            $houseModel->name= $house['name'];
-            $houseModel->head= $house['headOfHouse'];
+            $houseModel->name= $house['name'] ?? '';
+            $houseModel->head= $house['headOfHouse'] ?? NULL;
             $houseModel->school= $house['school'] ?? NULL;
-            $houseModel->mascot= $house['mascot'];
-            $houseModel->ghost= $house['houseGhost'];
-            $houseModel->founder= $house['founder'];
+            $houseModel->mascot= $house['mascot'] ?? NULL;
+            $houseModel->ghost= $house['houseGhost'] ?? NULL;
+            $houseModel->founder= $house['founder'] ?? NULL;
             
             $houseModel->save();
         }
