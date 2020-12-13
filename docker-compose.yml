@@ -1,5 +1,14 @@
 version: '3.5'
 services:
+  php:
+    container_name: magic
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - postgres
   postgres:
     image: postgres:13.1-alpine
     container_name: "postgres"
