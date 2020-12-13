@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Character;
+use Illuminate\Validation\ValidationException;
 
 /**
  * Class that contains all buiness logic 
@@ -38,32 +39,34 @@ class CharacterService
     }
 
     /**
-     * Method for creating new characters
+     * Method do create/update characters. If the id of the character 
+     * is informed will update the existing character, if not, a new one
+     * will be created.
      *
      * @param string $house_id
      * @param string $name
      * @param string $school
      * @param string $patronus
      * 
-     * @return Character The newly created character object
+     * @param integer $id Character id in case of updating (default null)
+     * 
+     * @return Character
      */
-    public function create(string $house_id, string $name, string $school, string $patronus)
+    public function save(string $house_id, string $name, string $school, string $patronus, int $id = null)
     {
-        $characterModel = new Character();
+        $characterModel = null;
 
-        $characterModel->house_id = 1;
-        $characterModel->name = $name;
-        $characterModel->school = $school;
-        $characterModel->patronus = $patronus;
+        if (!empty($id)) {
+            $characterModel = Character::find($id);
 
-        $characterModel->save();
-
-        return $characterModel;
-    }
-
-    public function update(int $id, string $house_id, string $name, string $school, string $patronus)
-    {
-        $characterModel = Character::find($id);
+            if(empty($characterModel)) {
+                throw new \Exception("Invalid character ID");
+            }
+        }
+        
+        if (empty($characterModel)) {
+            $characterModel = new Character();
+        } 
 
         $characterModel->house_id = 1;
         $characterModel->name = $name;

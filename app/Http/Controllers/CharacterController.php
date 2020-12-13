@@ -72,7 +72,7 @@ class CharacterController extends Controller
             $school = $request->input("school");
             $patronus = $request->input("patronus");
 
-            $character = $characterService->create(
+            $character = $characterService->save(
                 $house,
                 $name,
                 $school,
@@ -95,15 +95,15 @@ class CharacterController extends Controller
             $school = $request->input("school");
             $patronus = $request->input("patronus");
 
-            $character = $characterService->update(
-                $id, 
+            $character = $characterService->save(
                 $house,
                 $name,
                 $school,
-                $patronus
+                $patronus,
+                $id
             );
 
-            return response()->json($character->id);
+            return response()->json($character);
                 
         } catch (\Exception $e) {
             throw $e;
