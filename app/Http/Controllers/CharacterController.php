@@ -67,22 +67,22 @@ class CharacterController extends Controller
     {
         try {
 
+            $house = $request->input("house");
             $name = $request->input("name");
             $school = $request->input("school");
             $patronus = $request->input("patronus");
 
-            $char = [
-                "name" => $name,
-                "school" => $school,
-                "patronus" => $patronus
-            ];
-
-            $character = $characterService->create($char);
+            $character = $characterService->create(
+                $house,
+                $name,
+                $school,
+                $patronus
+            );
 
             return response()->json($character->id);
                 
         } catch (\Exception $e) {
-            throw $e;
+            return response($e->getMessage(), 500);
         }
     }
 

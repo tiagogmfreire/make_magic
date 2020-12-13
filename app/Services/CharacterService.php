@@ -40,17 +40,21 @@ class CharacterService
     /**
      * Method for creating new characters
      *
-     * @param array $data Array containing all data for the new character
+     * @param string $house_id
+     * @param string $name
+     * @param string $school
+     * @param string $patronus
+     * 
      * @return Character The newly created character object
      */
-    public function create($data)
+    public function create(string $house_id, string $name, string $school, string $patronus)
     {
         $characterModel = new Character();
 
         $characterModel->house_id = 1;
-        $characterModel->name = $data['name'];
-        $characterModel->school = $data['school'];
-        $characterModel->patronus = $data['patronus'];
+        $characterModel->name = $name;
+        $characterModel->school = $school;
+        $characterModel->patronus = $patronus;
 
         $characterModel->save();
 
