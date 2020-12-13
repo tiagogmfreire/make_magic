@@ -82,17 +82,25 @@ class CharacterController extends Controller
             return response()->json($character->id);
                 
         } catch (\Exception $e) {
-            return response($e->getMessage(), 500);
+            throw $e;
         }
     }
 
     public function update($id, Request $request, CharacterService $characterService)
     {
-
+       
     }
 
     public function destroy($id, Request $request, CharacterService $characterService)
     {
+        try {
 
+            $characterService->delete($id);
+
+            return response()->json("success");
+                
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 }

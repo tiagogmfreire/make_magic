@@ -21,4 +21,5 @@ $router
 ->get('/houses', ['uses' => 'HouseController@index'])
 ->get('/characters', ['uses' => 'CharacterController@index'])
 ->get('/characters/{id}', ['uses' => 'CharacterController@show'])
-->post('/characters', ['uses' => 'CharacterController@store']);
+->post('/characters', ['uses' => 'CharacterController@store'])
+->delete('/characters/{id}', ['uses' => 'CharacterController@destroy']);

@@ -60,4 +60,11 @@ class CharacterService
 
         return $characterModel;
     }
+
+    public function delete($id)
+    {
+        $characterModel = Character::find($id);
+
+        $characterModel->delete();
+    }
 }
