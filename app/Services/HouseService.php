@@ -6,9 +6,31 @@ use App\Models\House;
 use \GuzzleHttp\Client;
 use function GuzzleHttp\Utils;
 
+/**
+ * Class that contains all buiness logic 
+ * for the domain object "House"
+ */
 class HouseService
 {
 
+    /**
+     * Method to list all houses
+     *
+     * @return array Returns a array with all houses
+     */
+    public function list()
+    {
+        $houses = House::all();
+
+        return $houses;
+    }
+
+    /**
+     * Method to import houses from an external
+     * API and save them in the database
+     *
+     * @return void
+     */
     public function import_from_api()
     {
         try {
@@ -34,6 +56,13 @@ class HouseService
         }
     }
 
+    /**
+     * Method that saves houses from an array
+     * into the database
+     *
+     * @param array $array Array with house data
+     * @return void
+     */
     public function saveArray($array)
     {
         try {
