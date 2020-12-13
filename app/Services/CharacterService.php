@@ -31,11 +31,13 @@ class CharacterService
 
             $houseModel = $this->houseService->search($house);
 
-            $chars = Character::where('house_id', $houseModel->id)->get();
+            $chars = Character::where('house_id', $houseModel->id)
+                                ->with('house')
+                                ->get();
 
         } else {
 
-            $chars = Character::all();
+            $chars = Character::with('house')->get();
         }
 
         return $chars;
