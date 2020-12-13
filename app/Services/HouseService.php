@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\House;
 use \GuzzleHttp\Client;
-use function GuzzleHttp\json_decode;
+use function GuzzleHttp\Utils;
 
 class HouseService
 {
@@ -36,32 +36,28 @@ class HouseService
 
     public function saveArray($array)
     {
-        foreach( $array['houses'] as $house) {
-
-            $houseModel = new House();
-
-            $houseModel = House::where('api_id', $house['id'])->first();
-
-            if (empty($houseModel)) {
-                $houseModel = new House();
-            }
-
-            $houseModel->api_id= $house['id'];
-            $houseModel->name= $house['name'] ?? '';
-            $houseModel->head= $house['headOfHouse'] ?? NULL;
-            $houseModel->school= $house['school'] ?? NULL;
-            $houseModel->mascot= $house['mascot'] ?? NULL;
-            $houseModel->ghost= $house['houseGhost'] ?? NULL;
-            $houseModel->founder= $house['founder'] ?? NULL;
-            
-            $houseModel->save();
-        }
-
         try {
 
+            foreach( $array['houses'] as $house) {
 
-
-            
+                $houseModel = new House();
+    
+                $houseModel = House::where('api_id', $house['id'])->first();
+    
+                if (empty($houseModel)) {
+                    $houseModel = new House();
+                }
+    
+                $houseModel->api_id= $house['id'];
+                $houseModel->name= $house['name'] ?? '';
+                $houseModel->head= $house['headOfHouse'] ?? NULL;
+                $houseModel->school= $house['school'] ?? NULL;
+                $houseModel->mascot= $house['mascot'] ?? NULL;
+                $houseModel->ghost= $house['houseGhost'] ?? NULL;
+                $houseModel->founder= $house['founder'] ?? NULL;
+                
+                $houseModel->save();
+            }
 
         } catch (\Exception $e) {
             throw $e;
