@@ -69,17 +69,15 @@ class CharacterController extends Controller
 
             $house = $request->input("house");
             $name = $request->input("name");
-            $school = $request->input("school");
             $patronus = $request->input("patronus");
 
             $character = $characterService->save(
                 $house,
                 $name,
-                $school,
                 $patronus
             );
 
-            return response()->json($character->id);
+            return response()->json($character);
                 
         } catch (\Exception $e) {
             throw $e;
@@ -92,13 +90,11 @@ class CharacterController extends Controller
 
             $house = $request->input("house");
             $name = $request->input("name");
-            $school = $request->input("school");
             $patronus = $request->input("patronus");
 
             $character = $characterService->save(
                 $house,
                 $name,
-                $school,
                 $patronus,
                 $id
             );

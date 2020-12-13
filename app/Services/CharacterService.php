@@ -61,7 +61,7 @@ class CharacterService
      * 
      * @return Character
      */
-    public function save(string $house_id, string $name, string $school, string $patronus, int $id = null)
+    public function save(string $house_id, string $name, string $patronus, int $id = null)
     {
         $characterModel = null;
 
@@ -90,7 +90,6 @@ class CharacterService
 
         $characterModel->house_id = $houseModel->id;
         $characterModel->name = $name;
-        $characterModel->school = $school;
         $characterModel->patronus = $patronus;
 
         $characterModel->save();
