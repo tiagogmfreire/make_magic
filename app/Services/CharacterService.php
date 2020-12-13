@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Character;
 use Illuminate\Validation\ValidationException;
+use App\Services\HouseService;
 
 /**
  * Class that contains all buiness logic 
@@ -11,6 +12,14 @@ use Illuminate\Validation\ValidationException;
  */
 class CharacterService
 {
+
+    private HouseService $houseService;
+
+    public function __construct(HouseService $houseService)
+    {
+        $this->houseService = $houseService;
+    }
+
     /**
      * Method to list all the characters
      *
@@ -56,19 +65,30 @@ class CharacterService
     {
         $characterModel = null;
 
+        // calling the house service class to search by the api_id
+        $houseModel = $this->houseService->search($house_id);
+
+        // if the house has not been found throws a exception
+        if (empty($houseModel)) {
+            throw new \Exception("Invalid house ID", 1);
+        }
+
+        // if the id is not null tries to updating an existing character
         if (!empty($id)) {
             $characterModel = Character::find($id);
+        }
 
-            if(empty($characterModel)) {
-                throw new \Exception("Invalid character ID");
-            }
+        // dealing with invalid character ids (not found and zero)
+        if(!empty($id) && empty($characterModel) || $id == 0) {
+            throw new \Exception("Invalid character ID");
         }
         
+        // If the var $characterModel is still null then creates a new character
         if (empty($characterModel)) {
             $characterModel = new Character();
         } 
 
-        $characterModel->house_id = 1;
+        $characterModel->house_id = $houseModel->id;
         $characterModel->name = $name;
         $characterModel->school = $school;
         $characterModel->patronus = $patronus;

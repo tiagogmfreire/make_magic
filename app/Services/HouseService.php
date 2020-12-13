@@ -14,6 +14,21 @@ class HouseService
 {
 
     /**
+     * Searchs for a house in the database by its external api
+     * ID.
+     *
+     * @param string $api_id ID of the house in the external API
+     * 
+     * @return houseModel
+     */
+    public function search($api_id)
+    {
+        $houseModel = House::where('api_id', $api_id)->first();
+
+        return $houseModel;
+    }
+
+    /**
      * Method to list all houses
      *
      * @return array Returns a array with all houses
