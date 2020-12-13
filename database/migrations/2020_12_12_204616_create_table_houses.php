@@ -34,6 +34,6 @@ class CreateTableHouses extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_houses');
+        Schema::dropIfExists('houses');
     }
 }

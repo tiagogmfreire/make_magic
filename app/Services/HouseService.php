@@ -49,7 +49,7 @@ class HouseService
             $houseModel->api_id= $house['id'];
             $houseModel->name= $house['name'];
             $houseModel->head= $house['headOfHouse'];
-            $houseModel->school= isset($house['school'])? $house['school'] : "";
+            $houseModel->school= $house['school'] ?? NULL;
             $houseModel->mascot= $house['mascot'];
             $houseModel->ghost= $house['houseGhost'];
             $houseModel->founder= $house['founder'];
