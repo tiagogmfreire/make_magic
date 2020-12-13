@@ -61,6 +61,20 @@ class CharacterService
         return $characterModel;
     }
 
+    public function update(int $id, string $house_id, string $name, string $school, string $patronus)
+    {
+        $characterModel = Character::find($id);
+
+        $characterModel->house_id = 1;
+        $characterModel->name = $name;
+        $characterModel->school = $school;
+        $characterModel->patronus = $patronus;
+
+        $characterModel->save();
+
+        return $characterModel;
+    }
+
     public function delete($id)
     {
         $characterModel = Character::find($id);

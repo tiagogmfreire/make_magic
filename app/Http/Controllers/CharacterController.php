@@ -88,7 +88,26 @@ class CharacterController extends Controller
 
     public function update($id, Request $request, CharacterService $characterService)
     {
-       
+        try {
+
+            $house = $request->input("house");
+            $name = $request->input("name");
+            $school = $request->input("school");
+            $patronus = $request->input("patronus");
+
+            $character = $characterService->update(
+                $id, 
+                $house,
+                $name,
+                $school,
+                $patronus
+            );
+
+            return response()->json($character->id);
+                
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 
     public function destroy($id, Request $request, CharacterService $characterService)
