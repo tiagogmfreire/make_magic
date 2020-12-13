@@ -45,7 +45,7 @@ class ImportHouses extends Command
             $houseService->import_from_api();
 
         } catch (\Exception $e) {
-            $this->error("An error occurred while updating the movies");
+            $this->error("An error occurred while importing data from external API:" . $e->getMessage());
         }
     }
 }
