@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services;
 
@@ -61,7 +61,18 @@ class CharacterService
      * 
      * @return Character
      */
-    public function save(string $house_id, string $name, string $patronus, int $id = null)
+    public function save(
+        string $house_id,
+        string $name,
+        ?string $patronus,
+        ?string $hair_color,
+        ?string $eye_color,
+        ?string $gender,
+        ?bool $dead,
+        ?string $birthday,
+        ?string $death_date,
+        ?int $id = null
+    ) 
     {
         $characterModel = null;
 
@@ -79,18 +90,24 @@ class CharacterService
         }
 
         // dealing with invalid character ids (not found and zero)
-        if(!empty($id) && empty($characterModel) || $id === 0) {
+        if (!empty($id) && empty($characterModel) || $id === 0) {
             throw new \Exception("Invalid character ID");
         }
-        
+
         // If the var $characterModel is still null then creates a new character
         if (empty($characterModel)) {
             $characterModel = new Character();
-        } 
+        }
 
         $characterModel->house_id = $houseModel->id;
         $characterModel->name = $name;
         $characterModel->patronus = $patronus;
+        $characterModel->hair_color = $hair_color;
+        $characterModel->eye_color = $eye_color;
+        $characterModel->gender = $gender;
+        $characterModel->dead = $dead;
+        // $characterModel->birthday = $birthday ?? null;
+        // $characterModel->death_date = $death_date ?? null;
 
         $characterModel->save();
 

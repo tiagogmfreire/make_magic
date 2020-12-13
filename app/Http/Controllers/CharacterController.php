@@ -70,11 +70,23 @@ class CharacterController extends Controller
             $house = $request->input("house");
             $name = $request->input("name");
             $patronus = $request->input("patronus");
+            $hair_color = $request->input("hair_color");
+            $eye_color = $request->input("eye_color");
+            $gender = $request->input("gender");
+            $dead = $request->input("dead");
+            $birthday = $request->input("birthday");
+            $death_date = $request->input("death_date");
 
             $character = $characterService->save(
                 $house,
                 $name,
-                $patronus
+                $patronus,
+                $hair_color,
+                $eye_color,
+                $gender,
+                $dead,
+                $birthday,
+                $death_date
             );
 
             return response()->json($character);
@@ -91,11 +103,23 @@ class CharacterController extends Controller
             $house = $request->input("house");
             $name = $request->input("name");
             $patronus = $request->input("patronus");
+            $hair_color = $request->input("hair_color");
+            $eye_color = $request->input("eye_color");
+            $gender = $request->input("gender");
+            $dead = $request->input("dead");
+            $birthday = $request->input("birthday");
+            $death_date = $request->input("death_date");
 
             $character = $characterService->save(
                 $house,
                 $name,
                 $patronus,
+                $hair_color,
+                $eye_color,
+                $gender,
+                $dead,
+                $birthday,
+                $death_date,
                 $id
             );
 
