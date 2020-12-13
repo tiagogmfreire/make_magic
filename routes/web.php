@@ -18,4 +18,6 @@ $router
     return $router->app->version();
 })
 //the endpoints of the API
-->get('/houses', ['uses' => 'HouseController@index']);
+->get('/houses', ['uses' => 'HouseController@index'])
+->get('/characters', ['uses' => 'CharacterController@index'])
+->get('/characters/{id}', ['uses' => 'CharacterController@show']);
