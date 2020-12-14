@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Character;
 use App\Services\CharacterService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Controller to manage all requests related to
@@ -115,6 +116,19 @@ class CharacterController extends Controller
     public function update($id, Request $request, CharacterService $characterService)
     {
         try {
+
+            $validator = Validator::make(
+                $request->post(),
+                [
+                    "birthday" => 'nullable|date_format:Y-m-d',
+                    "death_date" => 'nullable|date_format:Y-m-d'
+                ]
+            );
+
+            if ($validator->fails()) {
+
+                abort(400, $validator->errors());
+            }
 
             $house = $request->input("house");
             $name = $request->input("name");

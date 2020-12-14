@@ -53,34 +53,54 @@ class Handler extends ExceptionHandler
      *
      * @throws \Throwable
      */
-    public function render($request, Throwable $e)
+    public function render($request, Throwable $exception)
     {
-        //return parent::render($request, $exception);
+      //return parent::render($request, $exception);
 
-        $status = Response::HTTP_INTERNAL_SERVER_ERROR;
+      if ($exception instanceof HttpException) {
 
-        if ($e instanceof HttpResponseException) {
-          $status = Response::HTTP_INTERNAL_SERVER_ERROR;
-        } elseif ($e instanceof MethodNotAllowedHttpException) {
-          $status = Response::HTTP_METHOD_NOT_ALLOWED;
-          $e = new MethodNotAllowedHttpException([], 'HTTP_METHOD_NOT_ALLOWED', $e);
-        } elseif ($e instanceof NotFoundHttpException) {
-          $status = Response::HTTP_NOT_FOUND;
-          $e = new NotFoundHttpException('HTTP_NOT_FOUND', $e);
-        } elseif ($e instanceof AuthorizationException) {
-          $status = Response::HTTP_FORBIDDEN;
-          $e = new AuthorizationException('HTTP_FORBIDDEN', $status);
-        } elseif ($e instanceof \Dotenv\Exception\ValidationException && $e->getResponse()) {
-          $status = Response::HTTP_BAD_REQUEST;
-          $e = new \Dotenv\Exception\ValidationException('HTTP_BAD_REQUEST', $status, $e);
-        } elseif ($e) {
-          $e = new HttpException($status, $e->getMessage());
-        }
+        $status = $exception->getStatusCode();
 
-        return response()->json([
-          'success' => false,
-          'status' => $status,
-          'message' => env('APP_DEBUG') ? $e->getMessage() : 'An internal error ocurred while processing your request'
-        ], $status);
+        return response()->json(
+          [
+            'success' => false,
+            'status' => $status,
+            'message' => $exception->getMessage()
+          ], 
+          $status
+        );
+
+      } else {
+
+        return parent::render($request, $exception);
+      }
+
+      
+
+      // $status = Response::HTTP_INTERNAL_SERVER_ERROR;
+
+      // if ($e instanceof HttpResponseException) {
+      //   $status = Response::HTTP_INTERNAL_SERVER_ERROR;
+      // } elseif ($e instanceof MethodNotAllowedHttpException) {
+      //   $status = Response::HTTP_METHOD_NOT_ALLOWED;
+      //   $e = new MethodNotAllowedHttpException([], 'HTTP_METHOD_NOT_ALLOWED', $e);
+      // } elseif ($e instanceof NotFoundHttpException) {
+      //   $status = Response::HTTP_NOT_FOUND;
+      //   $e = new NotFoundHttpException('HTTP_NOT_FOUND', $e);
+      // } elseif ($e instanceof AuthorizationException) {
+      //   $status = Response::HTTP_FORBIDDEN;
+      //   $e = new AuthorizationException('HTTP_FORBIDDEN', $status);
+      // } elseif ($e instanceof \Dotenv\Exception\ValidationException && $e->getResponse()) {
+      //   $status = Response::HTTP_BAD_REQUEST;
+      //   $e = new \Dotenv\Exception\ValidationException('HTTP_BAD_REQUEST', $status, $e);
+      // } elseif ($e) {
+      //   $e = new HttpException($status, $e->getMessage());
+      // }
+
+      // return response()->json([
+      //   'success' => false,
+      //   'status' => $status,
+      //   'message' => env('APP_DEBUG') ? $e->getMessage() : 'An internal error ocurred while processing your request'
+      // ], $status);
     }
 }

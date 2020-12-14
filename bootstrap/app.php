@@ -23,7 +23,8 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-// $app->withFacades();
+// enabling facades for validation
+$app->withFacades();
 
 // enabling Eloquent ORM
 $app->withEloquent();
