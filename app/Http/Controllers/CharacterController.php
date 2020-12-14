@@ -64,27 +64,28 @@ class CharacterController extends Controller
      * with character information.
      *
      * @param Request $request
-     * @param CharacterService $characterService
      * @param HouseService $houseService
      * 
-     * @return bool
+     * @return void
      */
-    protected function validateChar(Request $request, CharacterService $characterService, HouseService $houseService)
+    protected function validateChar(Request $request, HouseService $houseService)
     {
+        $rules = [
+            "house" => 'required|string',
+            "name" => 'required|string',
+            "patronus" => 'nullable|string',
+            "hair_color" => 'nullable|string',
+            "eye_color" => 'nullable|string',
+            "gender" => 'nullable|string',
+            "dead" => 'nullable|boolean',
+            "birthday" => 'nullable|date_format:Y-m-d',
+            "death_date" => 'nullable|date_format:Y-m-d',
+        ]; 
+
         $validator = Validator::make(
             $request->post(), //getting all post data as array for validation
             //validation rules
-            [
-                "house" => 'required|string',
-                "name" => 'required|string',
-                "patronus" => 'nullable|string',
-                "hair_color" => 'nullable|string',
-                "eye_color" => 'nullable|string',
-                "gender" => 'nullable|string',
-                "dead" => 'nullable|boolean',
-                "birthday" => 'nullable|date_format:Y-m-d',
-                "death_date" => 'nullable|date_format:Y-m-d',
-            ],
+            $rules,
             // custom messages
             [
                 'date_format' => 'Dates must follow ISO 8601 standard: YYYY-MM-DD',
@@ -111,6 +112,7 @@ class CharacterController extends Controller
      *
      * @param Request $request
      * @param CharacterService $characterService
+     * @param HouseService $houseService
      * 
      * @return response Json response
      */
@@ -119,7 +121,7 @@ class CharacterController extends Controller
         try {
 
             //validate input (and abort if it fails)
-            $this->validateChar($request, $characterService, $houseService);
+            $this->validateChar($request, $houseService);
 
             $birthday = \DateTime::createFromFormat('Y-m-d',$request->input("birthday"));
             $death_date = \DateTime::createFromFormat('Y-m-d', $request->input("death_date"));
@@ -161,7 +163,12 @@ class CharacterController extends Controller
         try {
 
             //validate input (and abort if it fails)
-            $this->validateChar($request, $characterService, $houseService);
+            $this->validateChar($request, $houseService);
+
+            //validate character id
+            if (!$characterService->validate((int)$id)) {
+                abort(400, "Invalid character id");
+            }
 
             $birthday = \DateTime::createFromFormat('Y-m-d',$request->input("birthday"));
             $death_date = \DateTime::createFromFormat('Y-m-d', $request->input("death_date"));

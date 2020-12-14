@@ -13,7 +13,14 @@ use function GuzzleHttp\Utils;
 class HouseService
 {
 
-    public function validate($api_id)
+    /**
+     * Checks if the api_id supplied exists in the
+     * database
+     *
+     * @param string $api_id
+     * @return void
+     */
+    public function validate(string $api_id)
     {
         $valid = false;
 
@@ -35,7 +42,7 @@ class HouseService
      * 
      * @return houseModel
      */
-    public function search($api_id)
+    public function search(string $api_id)
     {
         $houseModel = House::where('api_id', $api_id)->first();
 

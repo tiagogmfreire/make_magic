@@ -25,6 +25,28 @@ class CharacterService
     }
 
     /**
+     * Checks if the character already exists 
+     * in the database
+     *
+     * @param integer $id The character's id
+     * 
+     * @return bool True for valid and false otherwise
+     */
+    public function validate($id)
+    {
+        $valid = false;
+
+        $char = $this->get($id);
+
+        if (!empty($char)) {
+
+            $valid = true;
+        }
+
+        return $valid;
+    }
+
+    /**
      * Method to list all the characters
      * 
      * @param string|null $house
