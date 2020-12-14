@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Model for the Character domain entity
+ */
 class Character extends Model
 {
     use SoftDeletes;

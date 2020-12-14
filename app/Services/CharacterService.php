@@ -7,14 +7,18 @@ use Illuminate\Validation\ValidationException;
 use App\Services\HouseService;
 
 /**
- * Class that contains all buiness logic 
+ * Class that contains all business logic 
  * for the domain object "Character"
  */
 class CharacterService
 {
-
     private HouseService $houseService;
 
+    /**
+     * The constructor requires a HouseService object
+     *
+     * @param HouseService $houseService
+     */
     public function __construct(HouseService $houseService)
     {
         $this->houseService = $houseService;
@@ -22,6 +26,8 @@ class CharacterService
 
     /**
      * Method to list all the characters
+     * 
+     * @param string|null $house
      *
      * @return array Returns an array with all characters
      */
@@ -62,15 +68,20 @@ class CharacterService
      * Method do create/update characters. If the id of the character 
      * is informed will update the existing character, if not, a new one
      * will be created.
-     *
-     * @param string $house_id
-     * @param string $name
-     * @param string $school
-     * @param string $patronus
      * 
-     * @param integer $id Character id in case of updating (default null)
+     * @param string $house_id The house id from the external API 
+     * @param string $name The name of the character
+     * @param string|null $patronus The name of the patronus
+     * @param string|null $hair_color The hair color name
+     * @param string|null $eye_color The eye color name
+     * @param string|null $gender the gender as full text
+     * @param boolean|null $dead Flag to indicate if the character is dead
+     * @param string|null $birthday birthday of the character
+     * @param string|null $death_date the date of death for dead characters
      * 
-     * @return Character
+     * @param integer|null $id the id of an existing character to be updated
+     * 
+     * @return void
      */
     public function save(
         string $house_id,
@@ -125,10 +136,17 @@ class CharacterService
         return $characterModel;
     }
 
-    public function delete($id)
+    /**
+     * Method to deleter character using
+     * softdelete.
+     *
+     * @param int $id
+     * @return void
+     */
+    public function delete(int $id)
     {
         $characterModel = Character::find($id);
 
-        $characterModel->delete();
+        return $characterModel->delete();
     }
 }

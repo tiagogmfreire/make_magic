@@ -98,6 +98,15 @@ class CharacterController extends Controller
         }
     }
 
+    /**
+     * Updates an existing character by its id
+     *
+     * @param int $id
+     * @param Request $request
+     * @param CharacterService $characterService
+     * 
+     * @return response
+     */
     public function update($id, Request $request, CharacterService $characterService)
     {
         try {
@@ -132,6 +141,15 @@ class CharacterController extends Controller
         }
     }
 
+    /**
+     * Deletes a character by its id
+     *
+     * @param int $id
+     * @param Request $request
+     * @param CharacterService $characterService
+     * 
+     * @return response
+     */
     public function destroy($id, Request $request, CharacterService $characterService)
     {
         try {

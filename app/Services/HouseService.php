@@ -7,7 +7,7 @@ use \GuzzleHttp\Client;
 use function GuzzleHttp\Utils;
 
 /**
- * Class that contains all buiness logic 
+ * Class that contains all business logic 
  * for the domain object "House"
  */
 class HouseService
