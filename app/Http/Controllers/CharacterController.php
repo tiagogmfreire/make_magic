@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Character;
 use App\Services\CharacterService;
+use App\Services\HouseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -113,7 +114,7 @@ class CharacterController extends Controller
      * 
      * @return response
      */
-    public function update($id, Request $request, CharacterService $characterService)
+    public function update($id, Request $request, CharacterService $characterService, HouseService $houseService)
     {
         try {
 
@@ -137,8 +138,10 @@ class CharacterController extends Controller
                 ]
             );
 
+            // checking if the request passed validation
             if ($validator->fails()) {
 
+                // aborting with the propper message and "bad request" status code
                 abort(400, $validator->errors());
             }
 
@@ -149,6 +152,11 @@ class CharacterController extends Controller
             $eye_color = $request->input("eye_color");
             $gender = $request->input("gender");
             $dead = $request->input("dead");
+
+            // validating the house id
+            if (!$houseService->validate($house)) {
+                abort(200, "Invalid house id");
+            }
 
             $birthday = \DateTime::createFromFormat('Y-m-d',$request->input("birthday"));
             $death_date = \DateTime::createFromFormat('Y-m-d', $request->input("death_date"));

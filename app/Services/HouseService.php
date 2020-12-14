@@ -13,6 +13,20 @@ use function GuzzleHttp\Utils;
 class HouseService
 {
 
+    public function validate($api_id)
+    {
+        $valid = false;
+
+        $house = $this->search($api_id);
+
+        if (!empty($house)) {
+
+            $valid = true;
+        }
+
+        return $valid;
+    }
+
     /**
      * Searchs for a house in the database by its external api
      * ID.
