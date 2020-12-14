@@ -81,7 +81,9 @@ class CharacterService
      */
     public function get($id)
     {
-        $char = Character::find($id);
+        $char = Character::where('id', $id)
+                            ->with('house')
+                            ->get();;
 
         return $char;
     }
