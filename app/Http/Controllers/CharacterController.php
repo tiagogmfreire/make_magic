@@ -60,6 +60,53 @@ class CharacterController extends Controller
     }
 
     /**
+     * Uses Lumen validation facade to validate input
+     * with character information.
+     *
+     * @param Request $request
+     * @param CharacterService $characterService
+     * @param HouseService $houseService
+     * 
+     * @return bool
+     */
+    protected function validateChar(Request $request, CharacterService $characterService, HouseService $houseService)
+    {
+        $validator = Validator::make(
+            $request->post(), //getting all post data as array for validation
+            //validation rules
+            [
+                "house" => 'required|string',
+                "name" => 'required|string',
+                "patronus" => 'nullable|string',
+                "hair_color" => 'nullable|string',
+                "eye_color" => 'nullable|string',
+                "gender" => 'nullable|string',
+                "dead" => 'nullable|boolean',
+                "birthday" => 'nullable|date_format:Y-m-d',
+                "death_date" => 'nullable|date_format:Y-m-d',
+            ],
+            // custom messages
+            [
+                'date_format' => 'Dates must follow ISO 8601 standard: YYYY-MM-DD',
+            ]
+        );
+
+        // checking if the request passed validation
+        if ($validator->fails()) {
+
+            // aborting with the propper message and "bad request" status code
+            abort(400, $validator->errors());
+        }
+
+        // validating the house id
+        if (!$houseService->validate($request->input("house"))) {
+            abort(200, "Invalid house id");
+        }
+
+        return true;
+    }
+
+    /**
      * Method to create new characteres
      *
      * @param Request $request
@@ -67,17 +114,12 @@ class CharacterController extends Controller
      * 
      * @return response Json response
      */
-    public function store(Request $request, CharacterService $characterService)
+    public function store(Request $request, CharacterService $characterService, HouseService $houseService)
     {
         try {
 
-            $house = $request->input("house");
-            $name = $request->input("name");
-            $patronus = $request->input("patronus");
-            $hair_color = $request->input("hair_color");
-            $eye_color = $request->input("eye_color");
-            $gender = $request->input("gender");
-            $dead = $request->input("dead");
+            //validate input (and abort if it fails)
+            $this->validateChar($request, $characterService, $houseService);
 
             $birthday = \DateTime::createFromFormat('Y-m-d',$request->input("birthday"));
             $death_date = \DateTime::createFromFormat('Y-m-d', $request->input("death_date"));
@@ -87,13 +129,13 @@ class CharacterController extends Controller
             $death_date = !empty($death_date)? $death_date : null;
 
             $character = $characterService->save(
-                $house,
-                $name,
-                $patronus,
-                $hair_color,
-                $eye_color,
-                $gender,
-                $dead,
+                $request->input("house"),
+                $request->input("name"),
+                $request->input("patronus"),
+                $request->input("hair_color"),
+                $request->input("eye_color"),
+                $request->input("gender"),
+                $request->input("dead"),
                 $birthday,
                 $death_date
             );
@@ -118,45 +160,8 @@ class CharacterController extends Controller
     {
         try {
 
-            $validator = Validator::make(
-                $request->post(), //getting all post data as array for validation
-                //validation rules
-                [
-                    "house" => 'required|string',
-                    "name" => 'required|string',
-                    "patronus" => 'nullable|string',
-                    "hair_color" => 'nullable|string',
-                    "eye_color" => 'nullable|string',
-                    "gender" => 'nullable|string',
-                    "dead" => 'nullable|boolean',
-                    "birthday" => 'nullable|date_format:Y-m-d',
-                    "death_date" => 'nullable|date_format:Y-m-d',
-                ],
-                // custom messages
-                [
-                    'date_format' => 'Dates must follow ISO 8601 standard: YYYY-MM-DD',
-                ]
-            );
-
-            // checking if the request passed validation
-            if ($validator->fails()) {
-
-                // aborting with the propper message and "bad request" status code
-                abort(400, $validator->errors());
-            }
-
-            $house = $request->input("house");
-            $name = $request->input("name");
-            $patronus = $request->input("patronus");
-            $hair_color = $request->input("hair_color");
-            $eye_color = $request->input("eye_color");
-            $gender = $request->input("gender");
-            $dead = $request->input("dead");
-
-            // validating the house id
-            if (!$houseService->validate($house)) {
-                abort(200, "Invalid house id");
-            }
+            //validate input (and abort if it fails)
+            $this->validateChar($request, $characterService, $houseService);
 
             $birthday = \DateTime::createFromFormat('Y-m-d',$request->input("birthday"));
             $death_date = \DateTime::createFromFormat('Y-m-d', $request->input("death_date"));
@@ -166,13 +171,13 @@ class CharacterController extends Controller
             $death_date = !empty($death_date)? $death_date : null;
 
             $character = $characterService->save(
-                $house,
-                $name,
-                $patronus,
-                $hair_color,
-                $eye_color,
-                $gender,
-                $dead,
+                $request->input("house"),
+                $request->input("name"),
+                $request->input("patronus"),
+                $request->input("hair_color"),
+                $request->input("eye_color"),
+                $request->input("gender"),
+                $request->input("dead"),
                 $birthday,
                 $death_date,
                 $id
