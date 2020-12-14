@@ -118,11 +118,20 @@ class CharacterController extends Controller
         try {
 
             $validator = Validator::make(
-                $request->post(),
+                $request->post(), //getting all post data as array for validation
+                //validation rules
                 [
+                    "house" => 'required|string',
+                    "name" => 'required|string',
+                    "patronus" => 'nullable|string',
+                    "hair_color" => 'nullable|string',
+                    "eye_color" => 'nullable|string',
+                    "gender" => 'nullable|string',
+                    "dead" => 'nullable|boolean',
                     "birthday" => 'nullable|date_format:Y-m-d',
-                    "death_date" => 'nullable|date_format:Y-m-d'
+                    "death_date" => 'nullable|date_format:Y-m-d',
                 ],
+                // custom messages
                 [
                     'date_format' => 'Dates must follow ISO 8601 standard: YYYY-MM-DD',
                 ]
