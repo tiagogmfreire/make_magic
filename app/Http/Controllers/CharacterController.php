@@ -122,6 +122,9 @@ class CharacterController extends Controller
                 [
                     "birthday" => 'nullable|date_format:Y-m-d',
                     "death_date" => 'nullable|date_format:Y-m-d'
+                ],
+                [
+                    'date_format' => 'Dates must follow ISO 8601 standard: YYYY-MM-DD',
                 ]
             );
 
