@@ -142,7 +142,13 @@ class CharacterController extends Controller
                 $death_date
             );
 
-            return response()->json($character);
+            // returning the response with the created object and location header
+            return response()
+                    ->json(
+                        $character,
+                        201
+                    )
+                    ->header('Location', '/characters/'.$character->id);
                 
         } catch (\Exception $e) {
             throw $e;
@@ -190,7 +196,13 @@ class CharacterController extends Controller
                 $id
             );
 
-            return response()->json($character);
+            // returning the response with the created object and location header
+            return response()
+                    ->json(
+                        $character,
+                        201
+                    )
+                    ->header('Location', '/characters/'.$character->id);
                 
         } catch (\Exception $e) {
             throw $e;
