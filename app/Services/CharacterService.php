@@ -91,8 +91,8 @@ class CharacterService
         ?string $eye_color,
         ?string $gender,
         ?bool $dead,
-        ?string $birthday,
-        ?string $death_date,
+        ?\DateTime $birthday,
+        ?\DateTime $death_date,
         ?int $id = null
     ) 
     {
@@ -128,8 +128,8 @@ class CharacterService
         $characterModel->eye_color = $eye_color;
         $characterModel->gender = $gender;
         $characterModel->dead = $dead;
-        // $characterModel->birthday = $birthday ?? null;
-        // $characterModel->death_date = $death_date ?? null;
+        $characterModel->birthday = $birthday;
+        $characterModel->death_date = $death_date;
 
         $characterModel->save();
 

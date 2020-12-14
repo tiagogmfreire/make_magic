@@ -76,8 +76,13 @@ class CharacterController extends Controller
             $eye_color = $request->input("eye_color");
             $gender = $request->input("gender");
             $dead = $request->input("dead");
-            $birthday = $request->input("birthday");
-            $death_date = $request->input("death_date");
+
+            $birthday = \DateTime::createFromFormat('Y-m-d',$request->input("birthday"));
+            $death_date = \DateTime::createFromFormat('Y-m-d', $request->input("death_date"));
+
+            // if datetime returns false then it's not a valid date format
+            $birthday = !empty($birthday)? $birthday : null;
+            $death_date = !empty($death_date)? $death_date : null;
 
             $character = $characterService->save(
                 $house,
@@ -118,8 +123,13 @@ class CharacterController extends Controller
             $eye_color = $request->input("eye_color");
             $gender = $request->input("gender");
             $dead = $request->input("dead");
-            $birthday = $request->input("birthday");
-            $death_date = $request->input("death_date");
+
+            $birthday = \DateTime::createFromFormat('Y-m-d',$request->input("birthday"));
+            $death_date = \DateTime::createFromFormat('Y-m-d', $request->input("death_date"));
+
+            // if datetime returns false then it's not a valid date format
+            $birthday = !empty($birthday)? $birthday : null;
+            $death_date = !empty($death_date)? $death_date : null;
 
             $character = $characterService->save(
                 $house,
