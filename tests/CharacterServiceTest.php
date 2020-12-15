@@ -10,6 +10,7 @@ use Laravel\Lumen\Testing\DatabaseTransactions;
  */
 class CharacterServiceTest extends TestCase
 {
+    use DatabaseTransactions;
 
     protected CharacterService $characterService;
 
@@ -109,5 +110,83 @@ class CharacterServiceTest extends TestCase
         $response = $this->characterService->get($id);
 
         $this->assertEmpty($response);
+    }
+
+    /**
+     * Testing save characters with no arguments
+     *
+     * @return void
+     */
+    public function testSaveCharNoArguments()
+    {
+        $this->expectException(\Error::class);
+
+        $char = $this->characterService->save();
+        
+    }
+
+    /**
+     * Testing save characters with wrong types
+     *
+     * @return void
+     */
+    public function testSaveCharWrongTypes()
+    {
+        $this->expectException(\Error::class);
+
+        $char = $this->characterService->save(
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+        );
+        
+    }
+
+    /**
+     * Testing save characters with wrong types
+     *
+     * @return void
+     */
+    public function testUpdateCharWrongTypes()
+    {
+        $this->expectException(\Error::class);
+
+        $char = $this->characterService->save(
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            'xxx'
+        );
+        
+    }
+
+
+    public function testSaveChar()
+    {
+        $char = $this->characterService->save(
+            '1760529f-6d51-4cb1-bcb1-25087fce5bde',
+            'Harry',
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+
+        $this->assertNotEmpty($char);
     }
 }
