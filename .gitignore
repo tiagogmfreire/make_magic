@@ -4,3 +4,6 @@ Homestead.json
 Homestead.yaml
 .env
 .phpunit.result.cache
+/resources/views/vendor
+/storage/api-docs
+/public/swagger-ui-assets

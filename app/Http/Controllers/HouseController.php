@@ -5,6 +5,59 @@ namespace App\Http\Controllers;
 use App\Services\HouseService;
 use Illuminate\Http\Request;
 
+// We can define the User Scheme here or in our App\User model
+/**
+ * @OA\Schema(
+ *   schema="HouseSchema",
+ *   title="House Model",
+ *   description="User model",
+ *   @OA\Property(
+ *     property="id", description="internal ID of the house",
+ *     @OA\Schema(type="number", example=1)
+ *  ),
+ *   @OA\Property(
+ *     property="api_id", description="external ID of the house",
+ *     @OA\Schema(type="string", example="1760529f-6d51-4cb1-bcb1-25087fce5bde")
+ *  ),
+ *  @OA\Property(
+ *     property="name", description="name of the house",
+ *     @OA\Schema(type="string", example="Gryffindor")
+ *  ),
+ *  @OA\Property(
+ *     property="head", description="head of the house",
+ *     @OA\Schema(type="string", example="Minerva McGonagall")
+ *  ),
+ *  @OA\Property(
+ *     property="school", description="name of the school",
+ *     @OA\Schema(type="string", example="Hogwarts School of Witchcraft and Wizardry")
+ *  ),
+ *  @OA\Property(
+ *     property="mascot", description="mascot of the house",
+ *     @OA\Schema(type="string", example="lion")
+ *  ),
+ *  @OA\Property(
+ *     property="ghost", description="ghost of the house",
+ *     @OA\Schema(type="string", example="Nearly Headless Nick")
+ *  ),
+ *  @OA\Property(
+ *     property="founder", description="founder of the house",
+ *     @OA\Schema(type="string", example="Goderic Gryffindor")
+ *  ),
+ * )
+ */
+// We can define the request parameter inside the Requests or here
+/**
+ * @OA\Parameter(
+ *   parameter="get_houses_request_parameter_limit",
+ *   name="limit",
+ *   description="Limit the number of results",
+ *   in="query",
+ *   @OA\Schema(
+ *     type="number", default=10
+ *   )
+ * ),
+ */
+
 class HouseController extends Controller
 {
     /**
@@ -14,6 +67,28 @@ class HouseController extends Controller
      * @param HouseService $houseService
      * 
      * @return response
+     */
+    /**
+     * @OA\Get(
+     *   path="/houses",
+     *   summary="Return the list of houses",
+     *   tags={"Hello"},
+     *   @OA\Parameter(ref="#/components/parameters/get_houses_request_parameter_limit"),
+     *    @OA\Response(
+     *      response=200,
+     *      description="List of users",
+     *      @OA\JsonContent(
+     *        @OA\Property(
+     *          property="data",
+     *          description="List of users",
+     *          @OA\Schema(
+     *            type="array",
+     *            @OA\Items(ref="#/components/schemas/HouseSchema")
+     *          )
+     *        )
+     *      )
+     *    )
+     * )
      */
     public function index(Request $request, HouseService $houseService) 
     {

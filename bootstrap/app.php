@@ -64,6 +64,8 @@ $app->singleton(
 $app->configure('app');
 // CORS Configuration
 $app->configure('cors');
+// load the swagger-lume configuration
+$app->configure('swagger-lume');
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -100,6 +102,9 @@ $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 
 // Adding CORS support
 $app->register(Fruitcake\Cors\CorsServiceProvider::class);
+
+// register the lumen swagger service provider
+$app->register(SwaggerLume\ServiceProvider::class);
 
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);

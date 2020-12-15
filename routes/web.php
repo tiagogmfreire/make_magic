@@ -15,7 +15,7 @@
 
 $router
 ->get('/', function () use ($router) {
-    return $router->app->version();
+    return redirect('api/docs');
 })
 //the endpoints of the API
 ->get('/houses', ['uses' => 'HouseController@index'])
