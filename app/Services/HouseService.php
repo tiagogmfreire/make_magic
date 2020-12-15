@@ -85,7 +85,7 @@ class HouseService
 
             $houses = json_decode($response->getBody(), true);
 
-            $this->saveArray($houses);
+            return $this->saveArray($houses);
 
         } catch (\Exception $e) {
             throw $e;
@@ -123,6 +123,8 @@ class HouseService
                 
                 $houseModel->save();
             }
+
+            return true;
 
         } catch (\Exception $e) {
             throw $e;

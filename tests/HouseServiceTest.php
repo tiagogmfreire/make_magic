@@ -10,6 +10,8 @@ use Laravel\Lumen\Testing\DatabaseTransactions;
 class HouseServiceTest extends TestCase
 {
 
+    use DatabaseTransactions;
+
     protected HouseService $houseService;
 
     /**
@@ -106,5 +108,51 @@ class HouseServiceTest extends TestCase
         $response = $this->houseService->validate($id);
 
         $this->assertNotEmpty($response);
+    }
+
+    /**
+     * Testing saving an array of houses
+     *
+     * @return void
+     */
+    public function testSaveArray()
+    {
+        $houses['houses'] = [
+            [
+                'id'=>'001aaabbb',
+                'name'=> 'House1',
+                'headOfHouse'=> 'Head1',
+                'school'=> 'school1',
+                'mascot'=> 'mascot1',
+                'houseGhost'=> 'ghost1',
+                'founder'=> 'founder1'
+            ],
+            [
+                'id'=>'002aaabbb',
+                'name'=> 'House2',
+                'headOfHouse'=> 'Head2',
+                'school'=> 'school2',
+                'mascot'=> 'mascot2',
+                'houseGhost'=> 'ghost2',
+                'founder'=> 'founder2'
+            ],
+            
+        ];
+
+        $response = $this->houseService->saveArray($houses);
+
+        $this->assertTrue($response);
+    }
+
+    /**
+     * Testing importing data from API
+     *
+     * @return void
+     */
+    public function testImportFromAPI()
+    {
+        $response = $this->houseService->import_from_api();
+
+        $this->assertTrue($response);
     }
 }
