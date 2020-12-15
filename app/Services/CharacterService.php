@@ -36,7 +36,7 @@ class CharacterService
     {
         $valid = false;
 
-        $char = $this->get($id);
+        $char = $this->get((int)$id);
 
         if (!empty($char)) {
 
@@ -81,9 +81,9 @@ class CharacterService
      */
     public function get($id)
     {
-        $char = Character::where('id', $id)
+        $char = Character::where('id', (int)$id)
                             ->with('house')
-                            ->get();;
+                            ->first();
 
         return $char;
     }
