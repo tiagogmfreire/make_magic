@@ -44,16 +44,6 @@ use Illuminate\Http\Request;
  *  )
  * )
  * 
- * 
- * @OA\Parameter(
- *   parameter="get_houses_request_parameter_limit",
- *   name="limit",
- *   description="Limit the number of results",
- *   in="query",
- *   @OA\Schema(
- *     type="number", default=10
- *   )
- * ),
  */
 class HouseController extends Controller
 {
@@ -69,7 +59,6 @@ class HouseController extends Controller
      *   path="/houses",
      *   summary="Return the list of houses",
      *   tags={"House"},
-     *   @OA\Parameter(ref="#/components/parameters/get_houses_request_parameter_limit"),
      *    @OA\Response(
      *      response=200,
      *      description="List of users",

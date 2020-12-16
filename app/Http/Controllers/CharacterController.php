@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
  * Characters
  * 
  * @OA\Schema(
- *   schema="CharacterSchema",
+ *   schema="characterschema",
  *   title="Character Schema",
  *   description="Character Schema",
  *   @OA\Property(
@@ -61,12 +61,12 @@ use Illuminate\Support\Facades\Validator;
 // We can define the request parameter inside the Requests or here
 /**
  * @OA\Parameter(
- *   parameter="get_chars_request_parameter_limit",
- *   name="limit",
- *   description="Limit the number of results",
- *   in="query",
+ *   parameter="id",
+ *   name="id",
+ *   description="The character's ID",
+ *   in="path",
  *   @OA\Schema(
- *     type="number", default=10
+ *     type="number", default=1
  *   )
  * ),
  */
@@ -84,7 +84,6 @@ class CharacterController extends Controller
      *   path="/characters",
      *   summary="Return the list of characters",
      *   tags={"Character"},
-     *   @OA\Parameter(ref="#/components/parameters/get_chars_request_parameter_limit"),
      *    @OA\Response(
      *      response=200,
      *      description="List of Characters",
@@ -94,12 +93,14 @@ class CharacterController extends Controller
      *          description="List of Characters",
      *          @OA\Schema(
      *            type="array",
-     *            @OA\Items(ref="#/components/schemas/CharacterSchema")
+     *            @OA\Items(ref="#/components/schemas/characterschema")
      *          )
      *        )
      *      )
      *    )
      * )
+     * 
+     * 
      */
     public function index(Request $request, CharacterService $characterService)
     {
@@ -129,7 +130,7 @@ class CharacterController extends Controller
      *   path="/characters/{id}",
      *   summary="Returns details from a single character by id",
      *   tags={"Character"},
-     *   @OA\Parameter(ref="#/components/parameters/get_chars_request_parameter_limit"),
+     *   @OA\Parameter(ref="#/components/parameters/id"),
      *    @OA\Response(
      *      response=200,
      *      description="Characters details",
@@ -221,7 +222,7 @@ class CharacterController extends Controller
      *   path="/characters",
      *   summary="Creates a new character",
      *   tags={"Character"},
-     *   @OA\Parameter(ref="#/components/parameters/get_chars_request_parameter_limit"),
+     *   @OA\Parameter(ref="#/components/parameters/id"),
      *    @OA\Response(
      *      response=200,
      *      description="Creates a new character",
@@ -290,7 +291,7 @@ class CharacterController extends Controller
      *   path="/characters/{id}",
      *   summary="Updates a character by id",
      *   tags={"Character"},
-     *   @OA\Parameter(ref="#/components/parameters/get_chars_request_parameter_limit"),
+     *   @OA\Parameter(ref="#/components/parameters/id"),
      *    @OA\Response(
      *      response=200,
      *      description="Updates a character by id",
@@ -365,7 +366,7 @@ class CharacterController extends Controller
      *   path="/characters/{id}",
      *   summary="Removes a character by id",
      *   tags={"Character"},
-     *   @OA\Parameter(ref="#/components/parameters/get_chars_request_parameter_limit"),
+     *   @OA\Parameter(ref="#/components/parameters/id"),
      *    @OA\Response(
      *      response=200,
      *      description="Removes a character by id",
