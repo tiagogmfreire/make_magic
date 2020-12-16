@@ -43,3 +43,12 @@ docker-compose up -d postgres
 There are Unit and Integration testing scripts in the /tests folder using Lumen's PHPUnit native integration. 
 
 You can run them using the a ```phpunit.sh``` shell script that calls the PHPUnit file from the vendor folder.
+
+## API Documentation
+
+You can generate the documentation with Swagger UI by running the following:
+```
+php artisan swagger-lume:generate
+```
+
+The HTML Swagger UI documentation will be available in both "/" and "/api/docs" routes.

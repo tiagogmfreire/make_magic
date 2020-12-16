@@ -57,9 +57,8 @@ use Illuminate\Support\Facades\Validator;
  *     @OA\Schema(type="date", example="False")
  *  )
  * )
- */
-// We can define the request parameter inside the Requests or here
-/**
+ * 
+ * 
  * @OA\Parameter(
  *   parameter="id",
  *   name="id",
@@ -68,7 +67,7 @@ use Illuminate\Support\Facades\Validator;
  *   @OA\Schema(
  *     type="number", default=1
  *   )
- * ),
+ * )
  */
 class CharacterController extends Controller
 {
@@ -222,7 +221,15 @@ class CharacterController extends Controller
      *   path="/characters",
      *   summary="Creates a new character",
      *   tags={"Character"},
-     *   @OA\Parameter(ref="#/components/parameters/id"),
+     *   @OA\RequestBody(
+     *     request="character",
+     *     description="The character schema",
+     *     required=true,
+     *     @OA\JsonContent(
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/characterschema")
+     *     )
+     *    ),
      *    @OA\Response(
      *      response=201,
      *      description="Creates a new character",
@@ -232,12 +239,14 @@ class CharacterController extends Controller
      *          description="Creates a new character",
      *          @OA\Schema(
      *            type="array",
-     *            @OA\Items(ref="#/components/schemas/CharacterSchema")
+     *            @OA\Items(ref="#/components/schemas/characterschema")
      *          )
      *        )
      *      )
      *    )
      * )
+     * 
+
      */
     public function store(Request $request, CharacterService $characterService, HouseService $houseService)
     {
@@ -292,6 +301,15 @@ class CharacterController extends Controller
      *   summary="Updates a character by id",
      *   tags={"Character"},
      *   @OA\Parameter(ref="#/components/parameters/id"),
+     *   @OA\RequestBody(
+     *     request="character",
+     *     description="The character schema",
+     *     required=true,
+     *     @OA\JsonContent(
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/characterschema")
+     *     )
+     *    ),
      *    @OA\Response(
      *      response=201,
      *      description="Updates a character by id",
