@@ -171,6 +171,10 @@ class CharacterService
     {
         $characterModel = Character::find($id);
 
+        if (empty($characterModel)) {
+            return false;
+        }
+
         return $characterModel->delete();
     }
 }

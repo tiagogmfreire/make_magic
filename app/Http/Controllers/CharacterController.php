@@ -387,9 +387,18 @@ class CharacterController extends Controller
     {
         try {
 
+            //validate character id
+            if (!$characterService->validate((int)$id)) {
+                abort(400, "Invalid character id");
+            }
+
             $characterService->delete($id);
 
-            return response()->json("success");
+            return response()
+                    ->json(
+                        "Character removed successfully",
+                        200
+                    );
                 
         } catch (\Exception $e) {
             throw $e;
