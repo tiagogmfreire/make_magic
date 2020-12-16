@@ -23,4 +23,5 @@ $router
 ->get('/characters/{id}', ['uses' => 'CharacterController@show'])
 ->post('/characters', ['uses' => 'CharacterController@store'])
 ->delete('/characters/{id}', ['uses' => 'CharacterController@destroy'])
-->put('/characters/{id}', ['uses' => 'CharacterController@update']);
+->put('/characters/{id}', ['uses' => 'CharacterController@update'])
+->post('/characters/{id}/restore', ['uses' => 'CharacterController@restore']);

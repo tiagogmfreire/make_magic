@@ -404,4 +404,34 @@ class CharacterController extends Controller
             throw $e;
         }
     }
+
+    /**
+     * Restores a deleted character by id
+     *
+     * @param int $id The character id
+     * @param Request $request
+     * @param CharacterService $characterService
+     * 
+     * @return void
+     */
+    public function restore($id, Request $request, CharacterService $characterService)
+    {
+        try {
+
+            $char = $characterService->restore($id);
+
+            if (empty($char)) {
+                abort(400, "Invalid character id");
+            }
+
+            return response()
+                    ->json(
+                        "Character restored successfully",
+                        200
+                    );
+                
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
 }

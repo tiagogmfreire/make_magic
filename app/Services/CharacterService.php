@@ -177,4 +177,24 @@ class CharacterService
 
         return $characterModel->delete();
     }
+
+    /**
+     * Method to restore deleted characters
+     *
+     * @param integer $id
+     * 
+     * @return void
+     */
+    public function restore(int $id)
+    {
+        $characterModel = Character::withTrashed()->find($id);
+
+        if (empty($characterModel)) {
+            return false;
+        }
+
+        $characterModel->restore();
+
+        return $characterModel;
+    }
 }
