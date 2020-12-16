@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Services\HouseService;
 use Illuminate\Http\Request;
 
-// We can define the User Scheme here or in our App\User model
 /**
  * @OA\Schema(
  *   schema="HouseSchema",
@@ -42,11 +41,10 @@ use Illuminate\Http\Request;
  *  @OA\Property(
  *     property="founder", description="founder of the house",
  *     @OA\Schema(type="string", example="Goderic Gryffindor")
- *  ),
+ *  )
  * )
- */
-// We can define the request parameter inside the Requests or here
-/**
+ * 
+ * 
  * @OA\Parameter(
  *   parameter="get_houses_request_parameter_limit",
  *   name="limit",
@@ -57,7 +55,6 @@ use Illuminate\Http\Request;
  *   )
  * ),
  */
-
 class HouseController extends Controller
 {
     /**
@@ -67,12 +64,11 @@ class HouseController extends Controller
      * @param HouseService $houseService
      * 
      * @return response
-     */
-    /**
+     * 
      * @OA\Get(
      *   path="/houses",
      *   summary="Return the list of houses",
-     *   tags={"Hello"},
+     *   tags={"House"},
      *   @OA\Parameter(ref="#/components/parameters/get_houses_request_parameter_limit"),
      *    @OA\Response(
      *      response=200,
