@@ -224,7 +224,7 @@ class CharacterController extends Controller
      *   tags={"Character"},
      *   @OA\Parameter(ref="#/components/parameters/id"),
      *    @OA\Response(
-     *      response=200,
+     *      response=201,
      *      description="Creates a new character",
      *      @OA\JsonContent(
      *        @OA\Property(
@@ -293,7 +293,7 @@ class CharacterController extends Controller
      *   tags={"Character"},
      *   @OA\Parameter(ref="#/components/parameters/id"),
      *    @OA\Response(
-     *      response=200,
+     *      response=201,
      *      description="Updates a character by id",
      *      @OA\JsonContent(
      *        @OA\Property(
@@ -413,6 +413,28 @@ class CharacterController extends Controller
      * @param CharacterService $characterService
      * 
      * @return void
+     * 
+     * 
+     * @OA\Post(
+     *   path="/characters/{id}/restore",
+     *   summary="Restores a deleted character by id",
+     *   tags={"Character"},
+     *   @OA\Parameter(ref="#/components/parameters/id"),
+     *    @OA\Response(
+     *      response=200,
+     *      description="Restores a deleted character by id",
+     *      @OA\JsonContent(
+     *        @OA\Property(
+     *          property="data",
+     *          description="Restores a deleted character by id",
+     *          @OA\Schema(
+     *            type="array",
+     *            @OA\Items(ref="#/components/schemas/CharacterSchema")
+     *          )
+     *        )
+     *      )
+     *    )
+     * )
      */
     public function restore($id, Request $request, CharacterService $characterService)
     {
