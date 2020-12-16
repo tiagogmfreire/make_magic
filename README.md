@@ -1,24 +1,45 @@
-# Lumen PHP Framework
+# Make Magic API
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
+Backend API for managing Harry Potter characters.
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+Built with PHP 7.4 and Lumen 8.x.
 
-## Official Documentation
+## Configuration
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+You need a PHP development  as described in [Lumen documentation](https://lumen.laravel.com/docs/8.x#installation) with composer installed.
 
-## Contributing
+Then run the follow commands in your terminal:
+```
+composer install
+cp env.example .env
+php artisan key:generate
+```
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Edit the .env file with your database configuration (you may use the postgres service from the included [docker-compose](Docker-compose))
 
-## Security Vulnerabilities
+With the database configuration done run the migrations with:
+```
+php artisan migrate
+```
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+For local development there is a ```run.sh``` script with the following command to run the PHP localserver:
+```
+php -S localhost:80 -t public
+```
 
-## License
+## Docker
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+There is a docker image based on the official PHP image and a docker-compose.yml file.
+
+### Docker-compose
+
+The included docker-compose file has a postgres service based on the official image that you can use by defining the variables POSTGRES_DB, POSTGRES_USER and POSTGRES_PASSWORD in the .env file and then running :
+```
+docker-compose up -d postgres
+```
+
+## Testing
+
+There are Unit and Integration testing scripts in the /tests folder using Lumen's PHPUnit native integration. 
+
+You can run them using the a ```phpunit.sh``` shell script that calls the PHPUnit file from the vendor folder.
